@@ -3,7 +3,7 @@ import requests
 
 if __name__ == '__main__':
 
-    coin = input('Coin: ')
+    coin = input('\nCoin: ')
     print(f'💸 Picking {coin} value...\n')
     coin = coin.replace(" ", "-").replace('$', '')
     url = f'https://coinmarketcap.com/currencies/{coin}/'
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     soup = BeautifulSoup(page.content, 'html.parser')
     
     # Value
-    value = soup.select_one('.priceValue')
+    value = soup.select_one('.priceValue').text
 
     # Price Change 24h:
     twofour_html = soup.select_one('.sc-5fd6bdfe-0')
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     }).text
 
     # Market
-    market_cap = soup.find('div', {'class': 'statsValue'})
+    market_cap = soup.find('div', {'class': 'statsValue'}).text
 
     # Image
     image = soup.find('meta', {
